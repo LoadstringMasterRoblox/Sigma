@@ -1,0 +1,41 @@
+workflows:
+  ios-workflow:
+    name: iOS Puzzle Game Build (Unsigned)
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      vars:
+        XCODE_WORKSPACE: "PuzzleGame.xcodeproj"
+        XCODE_SCHEME: "PuzzleGame"
+      xcode: latest
+    scripts:
+      - name: Build app without code signing
+        script: |
+          xcodebuild clean build \
+            -project "$XCODE_WORKSPACE" \
+            -scheme "$XCODE_SCHEME" \
+            -sdk iphoneos \
+            -configuration Release \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            -derivedDataPath build
+      
+      - name: Create IPA
+        script: |
+          mkdir -p Payload
+          cp -r build/Build/Products/Release-iphoneos/PuzzleGame.app Payload/
+          zip -r PuzzleGame.ipa Payload
+          rm -rf Payload
+    
+    artifacts:
+      - PuzzleGame.ipa
+      - build/Build/Products/Release-iphoneos/*.app
+    
+    publishing:
+      email:
+        recipients:
+          - perez.liamm2015@gmail.com
+        notify:
+          success: true
+          failure: true

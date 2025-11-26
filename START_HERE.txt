@@ -1,0 +1,30 @@
+Get started by following one of our iOS quick start guides
+
+1. Follow the iOS guide to configure your project and create the codemagic.yaml file.
+2. Save the codemagic.yaml file to the project root folder.
+3. Push the added file to the repository. From command line:
+
+```
+git add codemagic.yaml
+git commit -m 'Add first workflow'
+git push
+```
+
+---
+
+DONE! ✅
+
+The codemagic.yaml file is already in this zip at the root folder.
+
+Just push to GitHub:
+
+```
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/PuzzleGame.git
+git push -u origin main
+```
+
+Then connect your repo to Codemagic.io and click "Start build"!
